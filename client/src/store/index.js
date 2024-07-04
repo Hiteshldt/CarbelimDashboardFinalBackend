@@ -88,7 +88,8 @@ const store = createStore({
                     { id: 'Ap10', name: 'Air-PM10'},{ id: 'Atvo', name: 'Air-TVOC'},{ id: 'Ahch', name: 'Air-HCHO'},{ id: 'Atem', name: 'Air-Temp'},
                 ]
             },
-            graphData: {} // New state property for graph data
+            graphData: [], // New state property for graph data
+            
         },
     },
     mutations: {
