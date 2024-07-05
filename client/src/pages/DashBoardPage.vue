@@ -128,11 +128,11 @@ export default {
         }
     },
     mounted() {
-    this.intervalId = setInterval(this.checkDeviceValidity, 5000); // Check every 5 seconds
+        this.intervalId = setInterval(this.checkDeviceValidity, 5000); // Check every 5 seconds
     },
     beforeUnmount() {
         if (this.intervalId) {
-        clearInterval(this.intervalId); // Clear the interval when the component is destroyed
+            clearInterval(this.intervalId); // Clear the interval when the component is destroyed
         }
     },
 }
@@ -148,6 +148,8 @@ export default {
 
 .deviceinput {
     margin: 30px 30px;
+    max-width: 100vw;
+    overflow-x: hidden;
 }
 
 .login-box h2 {
@@ -158,9 +160,9 @@ export default {
 
 .input-group {
     display: flex;
-  font-size: 16px;
-  align-items: center;
-  margin-bottom: 15px;
+    font-size: 16px;
+    align-items: center;
+    margin-bottom: 15px;
 }
 
 .input-group i {

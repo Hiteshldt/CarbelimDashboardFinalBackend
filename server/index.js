@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { response } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import axios from 'axios';
@@ -19,11 +19,13 @@ const userRouter = express.Router();
 const realtimData = express.Router();
 const relayControl = express.Router();
 const graphData = express.Router();
+const DownloadData = express.Router();
 
 app.use('/dashboardverify', userRouter);
 app.use('/togetrealtimedata', realtimData);
 app.use('/relaycontrol', relayControl);
 app.use('/graphdata', graphData);
+app.use('/downloaddata', DownloadData);
 
 userRouter
 .route('/')
@@ -40,6 +42,10 @@ relayControl
 graphData
 .route('/')
 .get(toHandleGraphData);
+
+DownloadData
+.route('/')
+.get(toHandleDownloadRequest);
 
 async function toHandleDevice(req, res) {
     const deviceId = req.body.data;
@@ -130,6 +136,29 @@ async function toHandleGraphData(req, res) {
     }
 }
 
+async function toHandleDownloadRequest(req, res) {
+    const { deviceid, range } = req.query;
+  
+    try {
+      // Make request to the external API
+      const apiResponse = await axios.get('https://q17jj3lu0l.execute-api.ap-south-1.amazonaws.com/dev/data/download', {
+        params: { deviceid, range }
+      });
+  
+      const { download_link } = apiResponse.data;
+  
+      // Fetch the CSV file from the provided download link
+      const fileResponse = await axios.get(download_link, { responseType: 'arraybuffer' });
+  
+      // Set appropriate headers to send the file back to the frontend
+      res.setHeader('Content-Disposition', `attachment; filename=data_${range}.csv`);
+      res.setHeader('Content-Type', 'text/csv');
+      res.send(fileResponse.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+}
 
 const PORT = 3000;
 app.listen(PORT, () => {

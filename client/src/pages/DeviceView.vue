@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <div v-if="splicedDeviceIdComponent === '201'">
       <div class="device-card">
         <div class="gradient-overlay"></div>
@@ -92,6 +91,15 @@ export default {
 </script>
 
 <style scoped>
+  .card {
+    border-radius: 10px;
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+    padding: 5px 15px 15px 15px;
+    text-align: center;
+    background: #ffffff;
+    margin: 15px 20px;
+  }
+
 .device-card {
   position: relative;
   background-image: url('../assets/images/Park-with-people.jpg'); /* Replace with your image path */
@@ -145,7 +153,7 @@ export default {
 
 @media (max-width: 650px) {
   .BlankSpace {
-    height: 70px;
+    height: 90px;
   }
   .device-card {
     height: 105px; /* 30% less than the original 150px for smaller screens */
