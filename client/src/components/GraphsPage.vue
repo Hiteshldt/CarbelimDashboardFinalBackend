@@ -15,16 +15,18 @@
 </template>
 
 <script>
-import ApexCharts from 'apexcharts'
-import { nextTick } from 'vue'
+import ApexCharts from 'apexcharts';
+import { nextTick, toRaw } from 'vue';
 
 export default {
   name: 'ChartComponent',
   data() {
     return {
       loading: true,
-      showCharts: false
-    }
+      showCharts: false,
+      barChart: null,
+      lineChart: null
+    };
   },
   computed: {
     graphData() {
@@ -33,23 +35,17 @@ export default {
   },
   watch: {
     graphData(newData) {
+      console.log("Graph data updated:", newData);
       if (newData.length) {
         this.loading = false;
         this.showCharts = true;
         nextTick(() => {
-          this.renderCharts(newData);
+          this.renderCharts(toRaw(newData));
         });
       }
     }
   },
   mounted() {
-    if (this.graphData.length) {
-      this.loading = false;
-      this.showCharts = true;
-      nextTick(() => {
-        this.renderCharts(this.graphData);
-      });
-    }
     window.addEventListener('resize', this.handleResize);
   },
   beforeUnmount() {
@@ -57,8 +53,9 @@ export default {
   },
   methods: {
     handleResize() {
+      console.log("Window resized.");
       if (this.showCharts) {
-        this.renderCharts(this.graphData);
+        this.renderCharts(toRaw(this.graphData));
       }
     },
     renderCharts(data) {
@@ -67,6 +64,7 @@ export default {
         const lineChartElement = document.querySelector("#chart-line");
 
         if (barChartElement && lineChartElement) {
+          console.log("Rendering charts with data:", data);
           const displayData = this.getDisplayData(data);
           const categories = displayData.map(item => item.ts);
           const values = displayData.map(item => item.value);
@@ -132,13 +130,57 @@ export default {
             }
           };
 
-          const barChart = new ApexCharts(barChartElement, barOptions);
-          const lineChart = new ApexCharts(lineChartElement, lineOptions);
+          if (!this.barChart) {
+            console.log("Initializing bar chart.");
+            this.barChart = new ApexCharts(barChartElement, barOptions);
+            this.barChart.render();
+          } else {
+            console.log("Updating bar chart.");
+            this.barChart.updateOptions(barOptions);
+          }
 
-          barChart.render();
-          lineChart.render();
+          if (!this.lineChart) {
+            console.log("Initializing line chart.");
+            this.lineChart = new ApexCharts(lineChartElement, lineOptions);
+            this.lineChart.render();
+          } else {
+            console.log("Updating line chart.");
+            this.lineChart.updateOptions(lineOptions);
+          }
+        } else {
+          console.error("Chart elements not found in the DOM.");
         }
       });
+    },
+    updateCharts(data) {
+      console.log("Updating charts with data:", data);
+      const displayData = this.getDisplayData(data);
+      const categories = displayData.map(item => item.ts);
+      const values = displayData.map(item => item.value);
+
+      if (this.barChart) {
+        console.log("Updating bar chart.");
+        this.barChart.updateSeries([{
+          data: values
+        }]);
+        this.barChart.updateOptions({
+          xaxis: {
+            categories: categories
+          }
+        });
+      }
+
+      if (this.lineChart) {
+        console.log("Updating line chart.");
+        this.lineChart.updateSeries([{
+          data: values
+        }]);
+        this.lineChart.updateOptions({
+          xaxis: {
+            categories: categories
+          }
+        });
+      }
     },
     getDisplayData(data) {
       const maxDataPoints = 30;
@@ -146,11 +188,10 @@ export default {
       return data.slice(Math.max(data.length - maxDisplayData, 0));
     }
   }
-}
+};
 </script>
 
 <style scoped>
-
 .card {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

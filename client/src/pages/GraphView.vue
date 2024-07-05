@@ -121,7 +121,7 @@ export default {
 <style scoped>
 .graph-data {
   width: 90%; /* Cover the whole width */
-  margin: 0 auto;
+  margin: 10px auto;
   padding: 20px;
   background-color: #f5f5f5;
   border-radius: 8px;
