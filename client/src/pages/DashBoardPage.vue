@@ -11,6 +11,7 @@
         </div>
         <div v-if="isDeviceValid">
             <DeviceView :deviceIdComponent="deviceIdValue"></DeviceView>
+            <graph-data></graph-data>
         </div>
     </div>
 </template>
@@ -20,10 +21,12 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import Swal from 'sweetalert2';
 import DeviceView from './DeviceView.vue';
+import GraphData from './GraphData.vue';
 
 export default {
     components: {
         DeviceView,
+        GraphData,
     },
     data() {
         return {
