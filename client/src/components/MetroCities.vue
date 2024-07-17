@@ -1,37 +1,73 @@
 <template>
-    <div class="card shadow border-none">
-        <div class="metro-citie-title-header">
-            <h2 class="text-white p-2 mb-0">India - Metro Cities AQI</h2>
-        </div>
-        <div class="row g-3 px-2 py-3">
-            <CityCard v-for="city in cities" :key="city.name" :name="city.name" :image="city.image" :aqiIn="city.aqiIn"
-                :temprature="city.temprature" />
-        </div>
+  <div class="card shadow border-none">
+    <div class="metro-citie-title-header">
+      <h4 class="text-white p-2 mb-0">India - Metro Cities AQI</h4>
     </div>
+    <div class="row g-3 px-2 py-3">
+      <CityCard
+        v-for="(city, index) in cityList"
+        :key="index"
+        :name="city.name"
+        :image="city.image"
+        :aqiIn="city.aqi"
+        :temprature="city.temprature"
+      />
+    </div>
+  </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import CityCard from './CityCard.vue';
 
 export default {
-    name: 'ParentComponent',
-    components: {
-        CityCard
-    },
-    data() {
-        return {
-            cities: [
-                { name: 'NEW DELHI', image: 'Delhi.svg', aqiIn: 102, temprature: '35°C / 61%' },
-                { name: 'MUMBAI', image: 'Delhi.svg', aqiIn: 85, temprature: '35°C / 61%' },
-                { name: 'Kota', image: 'Delhi.svg', aqiIn: 30, temprature: '35°C / 61%' },
-            ]
+  name: 'MetroCities',
+  components: {
+    CityCard
+  },
+  computed: {
+    ...mapGetters(['toGetIndiaCities']),
+    cityList() {
+      const cities = this.toGetIndiaCities || {};
+      const defaultAQI = 0;
+
+      const getAQI = (cityName) => {
+        const cityMap = {
+          'NEW DELHI': 'New Delhi',
+          'MUMBAI': 'Mumbai',
+          'KOLKATA': 'Kolkata'
+        };
+        const normalizedCityName = cityMap[cityName] || cityName;
+        return cities[normalizedCityName] ? cities[normalizedCityName].aqi : defaultAQI;
+      };
+
+      return [
+        {
+          name: 'NEW DELHI',
+          image: require('../assets/images/DelhiIcon.png'),
+          aqi: getAQI('NEW DELHI'),
+          temprature: '35°C / 61%' // You can dynamically fetch this data if available
+        },
+        {
+          name: 'MUMBAI',
+          image: require('../assets/images/MumbaiIcon.png'),
+          aqi: getAQI('MUMBAI'),
+          temprature: '35°C / 61%'
+        },
+        {
+          name: 'KOLKATA',
+          image: require('../assets/images/KolkataIcon.png'),
+          aqi: getAQI('KOLKATA'),
+          temprature: '35°C / 61%'
         }
+      ];
     }
-}
+  }
+};
 </script>
 
 <style scoped>
 .metro-citie-title-header {
-    background-color: #289BD1;
+  background-color: #289bd1;
 }
 </style>

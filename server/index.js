@@ -1,4 +1,4 @@
-import express, { response } from 'express';
+import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import axios from 'axios';
@@ -20,12 +20,20 @@ const realtimData = express.Router();
 const relayControl = express.Router();
 const graphData = express.Router();
 const DownloadData = express.Router();
+const HomeDataAqiIndia = express.Router();
+const HomeDataPollIndia = express.Router();
+const HomeDataAqiWorld = express.Router();
+const HomeDataAqiIndiaCitites = express.Router();
 
 app.use('/dashboardverify', userRouter);
 app.use('/togetrealtimedata', realtimData);
 app.use('/relaycontrol', relayControl);
 app.use('/graphdata', graphData);
 app.use('/downloaddata', DownloadData);
+app.use('/aqi/india', HomeDataAqiIndia);
+app.use('/pollutants/india', HomeDataPollIndia);
+app.use('/aqi/world', HomeDataAqiWorld);
+app.use('/aqi/india/cities', HomeDataAqiIndiaCitites);
 
 userRouter
 .route('/')
@@ -46,6 +54,133 @@ graphData
 DownloadData
 .route('/')
 .get(toHandleDownloadRequest);
+
+HomeDataAqiIndia
+.route('/')
+.get(toGetAQIIndiaData);
+
+HomeDataPollIndia
+.route('/')
+.get(toGetPollutantIndia);
+
+HomeDataAqiWorld
+.route('/')
+.get(toGetAQIWorld);
+
+HomeDataAqiIndiaCitites
+.route('/')
+.get(toGetIndiaCities);
+
+const cities = {
+    india: 'India',
+    newDelhi: 'New Delhi',
+    mumbai: 'Mumbai',
+    kolkata: 'Kolkata',
+    newYork: 'New York',
+    paris: 'Paris',
+    tokyo: 'Tokyo',
+    london: 'London',
+    dubai: 'Dubai',
+    singapore: 'Singapore',
+    hongKong: 'Hong Kong',
+    sydney: 'Sydney',
+    rome: 'Rome',
+    losAngeles: 'Los Angeles'
+};
+
+let aqiIndia = null;
+let pollutantsIndia = null;
+let aqiWorld = {};
+let aqiIndiaCities = {};
+
+const API_TOKEN = process.env.API_TOKEN; // Make sure to set this in your .env file
+
+const getAQIData = async (city) => {
+    const url = `https://api.waqi.info/feed/${city}/?token=${API_TOKEN}`;
+    try {
+        const response = await axios.get(url);
+        return response.data.data;
+    } catch (error) {
+        console.error(`Error fetching data for ${city}:`, error.message);
+        return null;
+    }
+};
+
+const updateAQIData = async () => {
+    aqiIndia = await getAQIData(cities.india);
+    if (aqiIndia) {
+        pollutantsIndia = {
+            pm25: aqiIndia.iaqi.pm25?.v,
+            pm10: aqiIndia.iaqi.pm10?.v,
+            so2: aqiIndia.iaqi.so2?.v,
+            co: aqiIndia.iaqi.co?.v,
+            o3: aqiIndia.iaqi.o3?.v,
+            no2: aqiIndia.iaqi.no2?.v,
+        };
+    } else {
+        console.error('Failed to fetch AQI data for India');
+    }
+
+    const worldCities = Object.entries(cities).filter(([key]) => key !== 'india');
+    aqiWorld = {};
+    for (const [key, city] of worldCities) {
+        const data = await getAQIData(city);
+        if (data) {
+            aqiWorld[city] = { aqi: data.aqi };
+        } else {
+            console.error(`Failed to fetch AQI data for ${city}`);
+        }
+    }
+
+    const indiaCities = [cities.newDelhi, cities.mumbai, cities.kolkata];
+    aqiIndiaCities = {};
+    for (const city of indiaCities) {
+        const data = await getAQIData(city);
+        if (data) {
+            aqiIndiaCities[city] = { aqi: data.aqi };
+        } else {
+            console.error(`Failed to fetch AQI data for ${city}`);
+        }
+    }
+};
+
+// Update AQI data every 90 minutes (5400000 milliseconds)
+setInterval(updateAQIData, 5400000);
+
+// Initial fetch to populate data
+updateAQIData();
+
+async function toGetAQIIndiaData(req, res) {
+    if (aqiIndia) {
+        res.json({ aqi: aqiIndia.aqi });
+    } else {
+        res.status(500).json({ error: 'Error fetching AQI data for India' });
+    }
+}
+
+async function toGetPollutantIndia(req, res) {
+    if (pollutantsIndia) {
+        res.json(pollutantsIndia);
+    } else {
+        res.status(500).json({ error: 'Error fetching pollutant data for India' });
+    }
+}
+
+async function toGetAQIWorld(req, res) {
+    if (Object.keys(aqiWorld).length) {
+        res.json(aqiWorld);
+    } else {
+        res.status(500).json({ error: 'Error fetching AQI data for world cities' });
+    }
+}
+
+async function toGetIndiaCities(req, res) {
+    if (Object.keys(aqiIndiaCities).length) {
+        res.json(aqiIndiaCities);
+    } else {
+        res.status(500).json({ error: 'Error fetching AQI data for Indian cities' });
+    }
+}
 
 async function toHandleDevice(req, res) {
     const deviceId = req.body.data;

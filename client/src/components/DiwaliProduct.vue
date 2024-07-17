@@ -2,44 +2,58 @@
 </script>
 
 <template>
-  <div id="container" class="row g-5">
-    <div class="col-12 col-md-6 custom-col">
-      <div class="background1">
-        <div class="gradient-overlay"></div>
-        <div class="product-card">
-          <div>
-            <img class="imageLogo" src="../assets/images/carbelim_logo.svg" />
+  <div class="MainContainer">
+    <div id="container" class="row g-5">
+      <div class="col-12 col-md-6 custom-col">
+        <div class="background1">
+          <div class="gradient-overlay"></div>
+          <div class="product-card">
+            <div>
+              <img class="imageLogo" src="../assets/images/carbelim_logo.svg" />
+            </div>
+            <div>
+              <h3>Carbelim Tree</h3>
+              <h3>Tree Alternative</h3>
+              <p>Surround yourself with the power of a tree.</p>
+              <button id="checkoutbtn" class="btn bg-white">Checkout</button>
+            </div>
           </div>
-          <div>
-            <h3>Carbelim Tree</h3>
-            <h3>Tree Alternative</h3>
-            <p>Surround yourself with the power of a tree.</p>
-            <button id="checkoutbtn" class="btn bg-white">Checkout</button>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 custom-col">
+        <div class="background2">
+          <div class="gradient-overlay"></div>
+          <div class="product-card">
+            <div>
+              <img class="imageLogo" src="../assets/images/carbelim_logo.svg" />
+            </div>
+            <div>
+              <h3>Carbelim Wall Pannel</h3>
+              <h3>Tree Alternative</h3>
+              <p>Check if there is fresh air.</p>
+              <button class="btn bg-white">Checkout</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-12 col-md-6 custom-col">
-      <div class="background2">
-        <div class="gradient-overlay"></div>
-        <div class="product-card">
-          <div>
-            <img class="imageLogo" src="../assets/images/carbelim_logo.svg" />
-          </div>
-          <div>
-            <h3>Carbelim Wall Pannel</h3>
-            <h3>Tree Alternative</h3>
-            <p>Check if there is fresh air.</p>
-            <button class="btn bg-white">Checkout</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    
   </div>
 </template>
 
 <style scoped>
+
+.MainContainer {
+  text-align: center;
+  justify-content: center;
+  margin: -10px;
+  margin-top: 10px;
+  background-color: white;
+  padding: 5px 2px 0px;
+  padding-bottom: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 #container {
   margin: 0;
   width: 100%;
@@ -83,8 +97,10 @@
 }
 
 .product-card {
+  margin-top: 20px;
   position: relative;
   padding: 16px;
+  margin:  0px -50px;
   z-index: 1; /* Ensure the product card content is above the gradient overlay */
 }
 
@@ -104,5 +120,14 @@ p {
 
 #checkoutbtn {
   margin-bottom: 50px;
+}
+@media (max-width: 600px) {
+  .product-card {
+    height: 280px;
+    margin-top: 20px;
+    position: relative;
+    padding: 16px;
+    margin: 0px -20px;
+  }
 }
 </style>

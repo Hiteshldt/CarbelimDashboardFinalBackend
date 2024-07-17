@@ -1,7 +1,8 @@
 <script setup>
-import CityRankingList from './CityRankingList.vue';
 import { defineProps } from 'vue';
+import CityRankingList from './CityRankingList.vue';
 
+// Define the props without assigning them to a variable
 defineProps({
   title: String,
   description: String,
@@ -19,8 +20,7 @@ defineProps({
         <div class="card-live-ranking-text">{{ description }}</div>
       </div>
       <div class="col-2 col-sm-2 col-md-2 col-lg-2 card-live-ranking">
-        <img src="../assets/live-rank-bar.png.png" width="24" height="24" alt="live rank bar"
-          class="img-fluid">
+        <img src="../assets/live-rank-bar.png.png" width="24" height="24" alt="live rank bar" class="img-fluid">
       </div>
     </div>
     <br>

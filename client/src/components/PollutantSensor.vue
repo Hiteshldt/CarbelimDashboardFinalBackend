@@ -2,7 +2,7 @@
   <div>
     <div class="card text-center border border-1">
       <div class="card-header d-flex justify-content-center align-items-center gap-2">
-        <img :src="imgSrc" :alt="imgAlt" width="28" height="28">
+        <img :src="imgSrc" :alt="imgAlt" width="23" height="23" class="pollutant-icon">
         <span class="">{{ label }}</span>
       </div>
       <div class="p-3 ">
@@ -59,5 +59,19 @@ export default {
 
 .pollutants-sensor-text-s {
   font-size: 1rem;
+}
+
+@media (max-width: 576px) {
+  .card-header {
+    flex-direction: column;
+  }
+
+  .pollutant-icon {
+    margin-bottom: 0.5rem;
+  }
+
+  .pollutants-sensor-text {
+    font-size: 1rem;
+  }
 }
 </style>

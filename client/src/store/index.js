@@ -1,4 +1,5 @@
 import { createStore } from 'vuex';
+import axios from 'axios';
 
 const store = createStore({
     state: {
@@ -90,6 +91,10 @@ const store = createStore({
             graphData: [], // New state property for graph data
             
         },
+        aqiIndia: null,
+        pollutantsIndia: null,
+        aqiWorld: null,
+        indiaCities: null,
     },
     mutations: {
         SET_DEVICE_VALIDITY(state, isValid) {
@@ -140,6 +145,37 @@ const store = createStore({
         SET_GRAPH_DATA(state, data) {
             state.graphData = data;
         },
+        SET_AQI_INDIA(state, data) {
+            state.aqiIndia = data;
+        },
+        SET_POLLUTANTS_INDIA(state, data) {
+            state.pollutantsIndia = data;
+        },
+        SET_AQI_WORLD(state, data) {
+            state.aqiWorld = data;
+        },
+        SET_INDIA_CITIES(state, data) {
+            state.indiaCities = data;
+        },
+    },
+      actions: {
+        async fetchData({ commit }) {
+        try {
+            const [aqiIndiaResponse, pollutantsIndiaResponse, aqiWorldResponse, indiaCitiesResponse] = await Promise.all([
+            axios.get('http://localhost:3000/aqi/india'),
+            axios.get('http://localhost:3000/pollutants/india'),
+            axios.get('http://localhost:3000/aqi/world'),
+            axios.get('http://localhost:3000/aqi/india/cities'),
+            ]);
+
+            commit('SET_AQI_INDIA', aqiIndiaResponse.data);
+            commit('SET_POLLUTANTS_INDIA', pollutantsIndiaResponse.data);
+            commit('SET_AQI_WORLD', aqiWorldResponse.data);
+            commit('SET_INDIA_CITIES', indiaCitiesResponse.data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+        },
     },
     getters: {
         toGetDeviceValid(state) {
@@ -159,6 +195,18 @@ const store = createStore({
         },
         toGetGraphData(state) {
             return state.graphData;
+        },
+        toGetAqiIndia(state) {
+            return state.aqiIndia;
+        },
+        toGetPollutantsIndia(state) {
+            return state.pollutantsIndia;
+        },
+        toGetAqiWorld(state) {
+            return state.aqiWorld;
+        },
+        toGetIndiaCities(state) {
+            return state.indiaCities;
         }
     }
 });

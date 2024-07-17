@@ -1,8 +1,8 @@
 <script setup>
 import { defineProps } from 'vue';
 
-// eslint-disable-next-line no-unused-vars
-const props = defineProps({
+// Define the props without assigning them to a variable
+defineProps({
   cities: {
     type: Array,
     required: true
@@ -24,8 +24,11 @@ const props = defineProps({
         <tr v-for="city in cities" :key="city.rank" style="border: none; border-color: white;">
           <th scope="row">{{ city.rank }}</th>
           <td>{{ city.city }}</td>
-          <td><span class="badge rounded-pill px-2" :style="{ backgroundColor: city.color }">{{ city.aqi
-              }}</span></td>
+          <td>
+            <span class="badge rounded-pill px-2" :style="{ backgroundColor: city.color }">
+              {{ city.aqi }}
+            </span>
+          </td>
         </tr>
       </tbody>
     </table>

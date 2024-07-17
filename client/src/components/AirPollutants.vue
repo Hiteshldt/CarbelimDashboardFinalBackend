@@ -7,18 +7,26 @@
       </div>
 
       <div class="row row-cols-3 g-3 px-3">
-        <PollutantSensor v-for="(pollutant, index) in pollutants" :key="index" :imgSrc="pollutant.imgSrc"
-          :imgAlt="pollutant.imgAlt" :value="pollutant.value" :link="pollutant.link" :label="pollutant.label"
-          :barColor="pollutant.barColor" :barWidth="pollutant.barWidth" />
+        <PollutantSensor
+          v-for="(pollutant, index) in analyzedPollutants"
+          :key="index"
+          :imgSrc="pollutant.imgSrc"
+          :imgAlt="pollutant.imgAlt"
+          :value="pollutant.value"
+          :link="pollutant.link"
+          :label="pollutant.label"
+          :barColor="pollutant.barColor"
+          :barWidth="pollutant.barWidth"
+        />
       </div>
 
       <div class="attention-box d-flex px-3 gap-3 align-items-center">
-        <div class="dynamic-airquality text-center" :style="{ backgroundColor: '#669D34' }">
-          <p class="m-0">PM2.5 <span class="times-value">1.9X</span></p>
+        <div class="dynamic-airquality text-center" :style="{ backgroundColor: pm25Analysis.barColor }">
+          <p class="m-0">PM2.5 <span class="times-value">{{ pm25Analysis.multiplier }}X</span></p>
         </div>
         <p class="m-0">
           The current PM2.5 concentration in India is
-          <b :style="{ color: '#669D34' }">1.9 times above</b>
+          <b :style="{ color: pm25Analysis.barColor }">{{ pm25Analysis.multiplier }} times above</b>
           the recommended limit given by the WHO 24 hrs air quality guidelines value.
         </p>
       </div>
@@ -29,6 +37,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import PollutantSensor from './PollutantSensor.vue';
 import MetroCities from './MetroCities.vue';
 
@@ -38,65 +47,103 @@ export default {
     PollutantSensor,
     MetroCities
   },
-  data() {
-    return {
-      pollutants: [
-        {
-          imgSrc: 'https://www.aqi.in/assets/images/pm2.5-icon.webp',
-          imgAlt: 'India pm2.5 icon',
-          value: '28',
-          link: 'https://www.pranaair.com/in/air-quality-sensor/outdoor-pm-sensor/',
-          label: '(PM2.5)',
-          barColor: '#669D34',
-          barWidth: 11.2
-        },
-        {
-          imgSrc: 'https://www.aqi.in/assets/images/pm10-icon.png',
-          imgAlt: 'India pm10 icon',
-          value: '59',
-          link: 'https://www.pranaair.com/in/air-quality-sensor/indoor-pm-sensor/',
-          label: '(PM10)',
-          barColor: '#F5EC00',
-          barWidth: 13.72
-        },
-        {
-          imgSrc: 'https://www.aqi.in/assets/images/so2.png',
-          imgAlt: 'India so2 sulphur dioxide icon',
-          value: '3',
-          link: 'https://www.pranaair.com/in/air-quality-sensor/sulfur-dioxide-so2-sensor/',
-          label: '(SO2)',
-          barColor: '#669D34',
-          barWidth: 0.5
-        },
-        {
-          imgSrc: 'https://www.aqi.in/assets/images/CO.png',
-          imgAlt: 'India co carbon monoxide icon',
-          value: '487',
-          link: 'https://www.pranaair.com/in/air-quality-sensor/carbon-monoxide-co-sensor/',
-          label: '(CO)',
-          barColor: '#E22400',
-          barWidth: 100
-        },
-        {
-          imgSrc: 'https://www.aqi.in/assets/images/o3.png',
-          imgAlt: 'India o3 ozone icon',
-          value: '10',
-          link: 'https://www.pranaair.com/in/air-quality-sensor/ozone-o3-sensor/',
-          label: '(Ozone)',
-          barColor: '#669D34',
-          barWidth: 5
-        },
-        {
-          imgSrc: 'https://www.aqi.in/assets/images/no2.png',
-          imgAlt: 'India no2 nitrogen dioxide icon',
-          value: '16',
-          link: 'https://www.pranaair.com/in/air-quality-sensor/nitrogen-dioxide-no2-sensor/',
-          label: '(NO2)',
-          barColor: '#669D34',
-          barWidth: 1.28
+  computed: {
+    ...mapGetters(['toGetPollutantsIndia']),
+    analyzedPollutants() {
+      const pollutantData = this.toGetPollutantsIndia || {};
+
+      // Function to analyze pollutant values and determine color and width
+      const analyzePollutant = (value, label) => {
+        let barColor, barWidth;
+
+        if (label === '(PM2.5)' || label === '(PM10)') {
+          if (value > 150) {
+            barColor = '#E22400'; // Red
+            barWidth = 100;
+          } else if (value > 50) {
+            barColor = '#F5EC00'; // Yellow
+            barWidth = (value / 150) * 100;
+          } else {
+            barColor = '#669D34'; // Green
+            barWidth = (value / 50) * 100;
+          }
+        } else {
+          if (value > 100) {
+            barColor = '#E22400'; // Red
+            barWidth = 100;
+          } else if (value > 50) {
+            barColor = '#F5EC00'; // Yellow
+            barWidth = (value / 100) * 100;
+          } else {
+            barColor = '#669D34'; // Green
+            barWidth = (value / 50) * 100;
+          }
         }
-      ]
-    };
+
+        return { barColor, barWidth };
+      };
+
+      return [
+        {
+          imgSrc: require('../assets/icons/APM25.svg'),
+          imgAlt: 'India pm2.5 icon',
+          value: pollutantData.pm25 || 0,
+          label: '(PM2.5)',
+          ...analyzePollutant(pollutantData.pm25 || 0, '(PM2.5)')
+        },
+        {
+          imgSrc: require('../assets/icons/APM10.svg'),
+          imgAlt: 'India pm10 icon',
+          value: pollutantData.pm10 || 0,
+          label: '(PM10)',
+          ...analyzePollutant(pollutantData.pm10 || 0, '(PM10)')
+        },
+        {
+          imgSrc: require('../assets/icons/AHCHO.svg'),
+          imgAlt: 'India so2 sulphur dioxide icon',
+          value: pollutantData.so2 || 0,
+          label: '(SO2)',
+          ...analyzePollutant(pollutantData.so2 || 0, '(SO2)')
+        },
+        {
+          imgSrc: require('../assets/icons/ACo2.svg'),
+          imgAlt: 'India co carbon monoxide icon',
+          value: pollutantData.co || 0,
+          label: '(CO)',
+          ...analyzePollutant(pollutantData.co || 0, '(CO)')
+        },
+        {
+          imgSrc: require('../assets/icons/WDo.svg'),
+          imgAlt: 'India o3 ozone icon',
+          value: pollutantData.o3 || 0,
+          label: '(Ozone)',
+          ...analyzePollutant(pollutantData.o3 || 0, '(Ozone)')
+        },
+        {
+          imgSrc: require('../assets/icons/WEc.svg'),
+          imgAlt: 'India no2 nitrogen dioxide icon',
+          value: pollutantData.no2 || 0,
+          label: '(NO2)',
+          ...analyzePollutant(pollutantData.no2 || 0, '(NO2)')
+        }
+      ];
+    },
+    pm25Analysis() {
+      const pm25Value = (this.toGetPollutantsIndia && this.toGetPollutantsIndia.pm25) || 0;
+      const WHO_PM25_LIMIT = 25; // WHO 24-hour mean guideline value for PM2.5
+      const multiplier = (pm25Value / WHO_PM25_LIMIT).toFixed(1);
+
+      let barColor;
+      if (pm25Value > 150) {
+        barColor = '#E22400'; // Red
+      } else if (pm25Value > 50) {
+        barColor = '#F5EC00'; // Yellow
+      } else {
+        barColor = '#669D34'; // Green
+      }
+
+      return { multiplier, barColor };
+    }
   }
 };
 </script>
