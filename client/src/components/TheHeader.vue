@@ -166,6 +166,11 @@ export default {
   color: #fff;
 }
 
+.navbar__bottom-links a i {
+  font-size: 1.4rem; /* Ensure icons are the right size */
+  color: inherit; /* Ensure icons inherit the text color */
+}
+
 @media (max-width: 650px) {
   .navbar__nav {
     display: none;

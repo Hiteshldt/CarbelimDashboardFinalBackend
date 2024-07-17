@@ -122,11 +122,11 @@ export default {
             ...chartOptions,
             chart: {
               ...chartOptions.chart,
-              type: 'line',
+              type: 'area',
             },
             title: {
               ...chartOptions.title,
-              text: 'Line Chart',
+              text: 'Spline Area Chart',
             }
           };
 
@@ -140,11 +140,11 @@ export default {
           }
 
           if (!this.lineChart) {
-            console.log("Initializing line chart.");
+            console.log("Initializing spline area chart.");
             this.lineChart = new ApexCharts(lineChartElement, lineOptions);
             this.lineChart.render();
           } else {
-            console.log("Updating line chart.");
+            console.log("Updating spline area chart.");
             this.lineChart.updateOptions(lineOptions);
           }
         } else {
@@ -171,7 +171,7 @@ export default {
       }
 
       if (this.lineChart) {
-        console.log("Updating line chart.");
+        console.log("Updating spline area chart.");
         this.lineChart.updateSeries([{
           data: values
         }]);

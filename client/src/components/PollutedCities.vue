@@ -1,0 +1,36 @@
+<script setup>
+import CityRankingList from './CityRankingList.vue';
+import { defineProps } from 'vue';
+
+defineProps({
+  title: String,
+  description: String,
+  cities: Array,
+});
+</script>
+
+<template>
+  <div class="col-12 card my-3">
+    <div class="row d-flex p-3">
+      <div class="col-10 col-sm-10 col-md-10 col-lg-10 card-live-ranking">
+        <div class="d-flex">
+          <h2 class="card-live-ranking-heading">{{ title }}</h2>
+        </div>
+        <div class="card-live-ranking-text">{{ description }}</div>
+      </div>
+      <div class="col-2 col-sm-2 col-md-2 col-lg-2 card-live-ranking">
+        <img src="../assets/live-rank-bar.png.png" width="24" height="24" alt="live rank bar"
+          class="img-fluid">
+      </div>
+    </div>
+    <br>
+    <CityRankingList :cities="cities" />
+    <div class="card-footer w-100 p-0">
+      <a href="" class="btn btn-primary w-100 rounded-top-0">View</a>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+/* Add your custom styles here */
+</style>

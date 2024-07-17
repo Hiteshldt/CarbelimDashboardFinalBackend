@@ -31,7 +31,6 @@ const store = createStore({
                     { id: 'Wdo', name: 'DO', unit: 'mg/L', value: 0, icon: 'WDo', low: 1, mid: 5, high: 12},
                     { id: 'Wtur', name: 'Turb', unit: 'NTU', value: 0, icon: 'WTurb', low: 0, mid: 5, high: 10},
                     { id: 'Wtds', name: 'TDS', unit: 'ppm', value: 0, icon: 'WTDs', low: 100, mid: 200, high: 400},
-                    { id: 'Wec', name: 'Ec', unit: 'µS/cm ', value: 0, icon: 'WEc',  low: 150, mid: 400, high: 600},
                 ],
                 R: [
                     { id: 'rel-1', name: 'Relay-1', value: 0 },
@@ -45,7 +44,7 @@ const store = createStore({
                     { id: 'Aaq', name: 'Air-AQI'}, { id: 'Aco', name: 'Air-CO2'},{ id: 'Ap1', name: 'Air-PM1.0'},{ id: 'Ap25', name: 'Air-PM2.5'},
                     { id: 'Ap10', name: 'Air-PM10'},{ id: 'Atvo', name: 'Air-TVOC'},{ id: 'Ahch', name: 'Air-HCHO'},{ id: 'Atem', name: 'Air-Temp'},
                     { id: 'Wph', name: 'Water-pH'}, { id: 'Wtem', name: 'Water-Temp'},{ id: 'Wdo', name: 'Water-DO'},{ id: 'Wtur', name: 'Water-Turb'},
-                    { id: 'Wtds', name: 'Water-TDS'},{ id: 'Wec', name: 'Water-EC'}
+                    { id: 'Wtds', name: 'Water-TDS'}
                 ]
             },
             C202: {
@@ -55,21 +54,21 @@ const store = createStore({
                     { id: 'Wdo', name: 'DO', unit: 'mg/L', value: 0, icon: 'WDo',  low: 1, mid: 5, high: 12},
                     { id: 'Wtur', name: 'Turb', unit: 'NTU', value: 0, icon: 'WTurb',  low: 0, mid: 5, high: 10},
                     { id: 'Wtds', name: 'TDS', unit: 'ppm', value: 0, icon: 'WTDs',  low: 100, mid: 200, high: 400},
-                    { id: 'Wec', name: 'Ec', unit: 'µS/cm ', value: 0, icon: 'WEc',  low: 150, mid: 400, high: 600},
                 ],
                 R: [
-                    { id: 'rel-1', name: 'Relay-1', value: 0 },
-                    { id: 'rel-2', name: 'Relay-2', value: 0 },
-                    { id: 'rel-3', name: 'Relay-3', value: 0 },
-                    { id: 'rel-4', name: 'Relay-4', value: 0 },
-                    { id: 'rel-5', name: 'Relay-5', value: 0 },
-                    { id: 'rel-6', name: 'Relay-6', value: 0 },
-                    { id: 'rel-7', name: 'Relay-7', value: 0 },
-                    { id: 'rel-8', name: 'Relay-8', value: 0 },
+                    { id: 'rel-1', name: 'Main Light', value: 0 },
+                    { id: 'rel-2', name: 'UV Light', value: 0 },
+                    { id: 'rel-3', name: 'Water Pump1', value: 0 },
+                    { id: 'rel-4', name: 'Water Pump2', value: 0 },
+                    { id: 'rel-5', name: 'Option1', value: 0 },
+                    { id: 'rel-6', name: 'Option2', value: 0 },
+                    { id: 'rel-7', name: 'Option3', value: 0 },
+                    { id: 'rel-8', name: 'DC Supply', value: 0 },
+                    { id: 'rel-9', name: 'Air Pump', value: 0 },
                 ],
                 G: [
                     { id: 'Wph', name: 'Water-pH'}, { id: 'Wtem', name: 'Water-Temp'},{ id: 'Wdo', name: 'Water-DO'},{ id: 'Wtur', name: 'Water-Turb'},
-                    { id: 'Wtds', name: 'Water-TDS'},{ id: 'Wec', name: 'Water-EC'}
+                    { id: 'Wtds', name: 'Water-TDS'}
                 ]
             },
             C203: {

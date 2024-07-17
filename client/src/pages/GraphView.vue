@@ -1,16 +1,16 @@
 <template>
-  <div class="graph-data">
-    <h2>Graph Data</h2>
-    <div class="dropdowns">
-      <div class="dropdown">
-        <label for="timeRange">Time Range:</label>
-        <select v-model="selectedTimeRange" @change="updateTimeRange" class="select-box">
+  <div class="graph-data container mt-4">
+    <h2 class="text-center mb-4">Graph Data</h2>
+    <div class="row justify-content-center">
+      <div class="col-md-6 mb-3">
+        <label for="timeRange" class="form-label">Time Range:</label>
+        <select v-model="selectedTimeRange" @change="updateTimeRange" class="form-select">
           <option v-for="range in timeRangeData" :key="range.id" :value="range.id">{{ range.name }}</option>
         </select>
       </div>
-      <div class="dropdown">
-        <label for="parameter">Parameter:</label>
-        <select v-model="selectedParameter" @change="updateParameter" class="select-box">
+      <div class="col-md-4 mb-3">
+        <label for="parameter" class="form-label">Parameter:</label>
+        <select v-model="selectedParameter" @change="updateParameter" class="form-select">
           <option v-for="parameter in deviceParameters" :key="parameter.id" :value="parameter.id">{{ parameter.name }}</option>
         </select>
       </div>
@@ -120,49 +120,47 @@ export default {
 
 <style scoped>
 .graph-data {
-  width: 90%; /* Cover the whole width */
-  margin: 10px auto;
+  width: 95%; /* Adjust the width */
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 20px; /* Set bottom margin */
+  background-color: #ffffff;
   padding: 20px;
-  background-color: #f5f5f5;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
-  font-size: 1.5rem;
-  margin-bottom: 10px;
+  margin-top: -10px;
+  margin-bottom: -20px;
+  font-size: 1.75rem;
   color: #333;
-  font-weight: bold; /* Increase text weight */
+  font-weight: bold;
 }
 
-.dropdowns {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.dropdown {
-  flex: 1;
-}
-
-.label {
+.form-label {
   font-size: 1rem;
   color: #666;
 }
 
-.select-box {
-  width: 100%;
-  padding: 10px;
+.form-select {
   font-size: 1rem;
-  border: 1px solid #ccc;
   border-radius: 4px;
-  background-color: #fff;
-  color: #333;
-  outline: none;
-  transition: border-color 0.3s ease;
+  padding: 10px;
 }
 
-.select-box:focus {
-  border-color: dodgerblue;
+@media (max-width: 767px) {
+  .graph-data {
+    padding: 10px;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .form-label,
+  .form-select {
+    font-size: 0.875rem;
+  }
 }
 </style>

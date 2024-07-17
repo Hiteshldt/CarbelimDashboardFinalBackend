@@ -1,17 +1,17 @@
 <template>
-    <div>
+    <div class="mainContainer">
         <div class="deviceinput" v-if="!isDeviceValid">
             <div class="login-box">
-                <div class="input-group">
-                    <i class="fas fa-home"></i>
-                    <input type="number" placeholder="Device Id" v-model="deviceid" />
-                </div>
-                <button @click="toCheckDeviceId">Add Device</button>
+                    <div class="input-group" key="input-group">
+                        <i class="fas fa-home"></i>
+                        <input type="number" placeholder="Device Id" v-model="deviceid" />
+                    </div>
+                <button key="button" @click="toCheckDeviceId">Add Device</button>
             </div>
+            <cards></cards>
         </div>
         <div v-if="isDeviceValid">
             <DeviceView :deviceIdComponent="deviceIdValue"></DeviceView>
-            <graph-data></graph-data>
         </div>
     </div>
 </template>
@@ -21,12 +21,12 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import Swal from 'sweetalert2';
 import DeviceView from './DeviceView.vue';
-import GraphData from './GraphData.vue';
+import Cards from '../components/CardCarousel.vue';
 
 export default {
     components: {
         DeviceView,
-        GraphData,
+        Cards,
     },
     data() {
         return {
@@ -91,12 +91,12 @@ export default {
                     if (this.responseCounter === 1) {
                         // Store the first response
                         this.temp1 = responseData;
-                    } else if (this.responseCounter === 3) {
+                    } else if (this.responseCounter === 4) {
                         // Store the third response
-                        this.temp3 = responseData;
+                        this.temp4 = responseData;
 
                         // Compare the first and third responses
-                        if (JSON.stringify(this.temp1) === JSON.stringify(this.temp3)) {
+                        if (JSON.stringify(this.temp1) === JSON.stringify(this.temp4)) {
                             Swal.fire({
                                 icon: 'warning',
                                 title: 'Device Not Connected',
@@ -107,7 +107,7 @@ export default {
 
                         // Reset the counter and update temp1 to the latest response data
                         this.responseCounter = 1;
-                        this.temp1 = this.temp3;
+                        this.temp1 = this.temp4;
                     }
 
                 } catch (error) {
@@ -143,10 +143,13 @@ export default {
 
 
 <style scoped>
+.mainContainer {
+    margin-top: -10px;
+}
 
-.deviceId{
-   margin: 0px 20px;
-   border-radius: 20px;
+.deviceId {
+    margin: 0px 20px;
+    border-radius: 20px;
 }
 
 .deviceinput {
@@ -156,12 +159,13 @@ export default {
 }
 
 .login-box h2 {
-  margin-bottom: 20px;
-  font-size: 28px;
-  color: #333;
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #333;
 }
 
 .input-group {
+    justify-content: center;
     display: flex;
     font-size: 16px;
     align-items: center;
@@ -169,32 +173,41 @@ export default {
 }
 
 .input-group i {
-  font-size: 18px;
-  margin-right: 10px;
-  color: #999;
+    font-size: 18px;
+    margin-right: 10px;
+    color: #999;
 }
 
 .input-group input {
-  align-items: start;
-  font-size: 18px;
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+    margin: 0px 2%;
+    width: 95%;
+    font-size: 18px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
 button {
-  width: 100%;
-  padding: 10px;
-  background-color: #304057;
-  border: none;
-  border-radius: 4px;
-  color: white;
-  font-size: 18px;
-  cursor: pointer;
+    margin: 0px 2.5%;
+    width: 95%;
+    padding: 10px;
+    background-color: #304057;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
 }
 
 button:hover {
-  background-color: #0056b3;
+    background-color: #0056b3;
 }
+
+@media (max-width: 768px) {
+    .mainContainer {
+        margin-top: -30px;
+    }
+
+}
+
 </style>

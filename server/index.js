@@ -112,21 +112,76 @@ async function toHandleGraphData(req, res) {
         // Function to format the timestamp based on the range
         const formatTimestamp = (timestamp, range) => {
             const date = new Date(timestamp);
-            if (range === 'hourly' || range === 'daily') {
-                return `${String(date.getUTCHours()).padStart(2, '0')}:${String(date.getUTCMinutes()).padStart(2, '0')}`;
+            // Convert to IST by adding 5 hours and 30 minutes
+            date.setHours(date.getUTCHours() + 5);
+            date.setMinutes(date.getUTCMinutes() + 30);
+
+            if (range === 'hourly') {
+                return `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+            } else if (range === 'daily') {
+                return `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
             } else if (range === 'weekly') {
-                return `${String(date.getUTCDate()).padStart(2, '0')}:${String(date.getUTCHours()).padStart(2, '0')}`;
+                return `${String(date.getDate()).padStart(2, '0')}-${String(date.getHours()).padStart(2, '0')}`;
             }
         };
 
-        // Process the data to include the parameter value (or 0) and formatted timestamp for each entry
-        const filteredData = data.map(item => ({
-            ts: formatTimestamp(item.ts || item.timestamp, range),
-            value: item[parameterId] !== undefined ? item[parameterId] : 0
-        }));
+        // Extract the latest timestamp from the data
+        const latestTimestamp = new Date(Math.max(...data.map(item => new Date(item.timestamp))));
 
-        // Sort the data by timestamp in descending order
-        filteredData.sort((a, b) => new Date(b.ts) - new Date(a.ts));
+        // Generate the target timestamps at 48-minute intervals for the last 24 hours
+        const targetTimestamps = [];
+        if (range === 'daily') {
+            for (let i = 0; i < 30; i++) {
+                const targetTime = new Date(latestTimestamp.getTime() - i * 48 * 60 * 1000);
+                targetTimestamps.push(targetTime);
+            }
+        }
+
+        // Function to find the closest data point for each target timestamp
+        const findClosestData = (timestamp, data) => {
+            const closestData = data.reduce((closest, item) => {
+                const itemTime = new Date(item.timestamp);
+                const closestTime = new Date(closest.timestamp);
+                return Math.abs(itemTime - timestamp) < Math.abs(closestTime - timestamp) ? item : closest;
+            });
+
+            // If the closest data point is within a 24-minute interval (either way), return it
+            if (Math.abs(new Date(closestData.timestamp) - timestamp) <= 24 * 60 * 1000) {
+                return closestData;
+            } else {
+                return null;
+            }
+        };
+
+        let filteredData;
+
+        if (range === 'daily') {
+            // Process the data to include the parameter value (or 0) and formatted timestamp for each target timestamp
+            filteredData = targetTimestamps.map(targetTime => {
+                const closestData = findClosestData(targetTime, data);
+                return {
+                    ts: formatTimestamp(targetTime, range),
+                    value: closestData ? closestData[parameterId] !== undefined ? closestData[parameterId] : 0 : 0
+                };
+            });
+
+            // Sort the data by timestamp in ascending order
+            filteredData.sort((a, b) => new Date(a.ts) - new Date(b.ts));
+        } else {
+            // For other ranges (e.g., hourly, weekly), process the data as before
+            filteredData = data.map(item => ({
+                ts: formatTimestamp(item.ts || item.timestamp, range),
+                value: item[parameterId] !== undefined ? item[parameterId] : 0
+            }));
+
+            // Sort the data by timestamp in descending order for hourly
+            if (range === 'hourly') {
+                filteredData.sort((a, b) => new Date(b.ts) - new Date(a.ts));
+            } else if (range === 'weekly') {
+                // Reverse the data order for weekly
+                filteredData.reverse();
+            }
+        }
 
         res.json(filteredData);
         console.log(`Filtered data for ${range} with parameter ${parameterId} fetched and sent to frontend`);
