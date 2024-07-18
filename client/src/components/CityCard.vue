@@ -1,6 +1,6 @@
 <template>
   <div class="col-12 col-sm-6 col-md-4">
-    <div class="card shadow">
+    <div class="card">
       <div class="row py-2">
         <div class="col-7 text-center">
           <div>

@@ -205,7 +205,7 @@ button:hover {
 
 @media (max-width: 768px) {
     .mainContainer {
-        margin-top: -30px;
+        margin-top: -15px;
     }
 
 }

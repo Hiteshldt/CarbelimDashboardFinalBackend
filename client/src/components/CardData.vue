@@ -49,8 +49,8 @@
   }
   
   .icon-image {
-    height: 220px;
-    width: 220px;
+    height: 250px;
+    width: 250px;
   }
   
   .description {

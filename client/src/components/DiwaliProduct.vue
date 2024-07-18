@@ -1,4 +1,7 @@
 <script setup>
+function openLink() {
+  window.open('https://www.carbelim.io/contact/', '_blank');
+}
 </script>
 
 <template>
@@ -13,9 +16,8 @@
             </div>
             <div>
               <h3>Carbelim Tree</h3>
-              <h3>Tree Alternative</h3>
               <p>Surround yourself with the power of a tree.</p>
-              <button id="checkoutbtn" class="btn bg-white">Checkout</button>
+              <button id="checkoutbtn" class="btn bg-white" @click="openLink">Checkout</button>
             </div>
           </div>
         </div>
@@ -29,9 +31,8 @@
             </div>
             <div>
               <h3>Carbelim Wall Pannel</h3>
-              <h3>Tree Alternative</h3>
               <p>Check if there is fresh air.</p>
-              <button class="btn bg-white">Checkout</button>
+              <button class="btn bg-white" @click="openLink">Checkout</button>
             </div>
           </div>
         </div>
@@ -39,6 +40,7 @@
     </div>
   </div>
 </template>
+
 
 <style scoped>
 
@@ -107,7 +109,9 @@
 .imageLogo {
   margin-bottom: 10px;
   margin-top: 10px;
-  width: 120px;
+  width: 100px;
+  opacity: 0.9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 h3 {

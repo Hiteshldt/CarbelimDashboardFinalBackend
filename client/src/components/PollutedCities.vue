@@ -26,11 +26,19 @@ defineProps({
     <br>
     <CityRankingList :cities="cities" />
     <div class="card-footer w-100 p-0">
-      <a href="" class="btn btn-primary w-100 rounded-top-0">View</a>
+      <a class="btn btn-primary w-100 rounded-top-0 bottomTab"></a>
     </div>
   </div>
 </template>
 
 <style scoped>
-/* Add your custom styles here */
+
+.card {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.bottomTab {
+  height: 35px;
+}
 </style>

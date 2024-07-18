@@ -24,6 +24,7 @@
     "sweetalert2": "^11.12.1",
     "swiper": "^11.1.4",
     "vue": "^3.2.13",
+    "vue-meta": "^2.4.0",
     "vue-owl-carousel": "^2.0.3",
     "vue-router": "^4.4.0",
     "vue3-carousel": "^0.3.3",

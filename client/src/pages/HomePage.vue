@@ -30,7 +30,9 @@
     <!-- <div class=" ">
       <AppSection />
     </div> -->
+    <div class="BlankSpace"></div>
   </div>
+  
 </template>
 
 <script>
@@ -98,13 +100,17 @@ export default {
 </script>
 
 <style scoped>
+.BlankSpace{
+  height: 0px;
+}
+
 #TopContainer {
   justify-content: center;
   background-color: white;
   margin-top: 1px;
   padding: 5px 2px 5px;
   padding-bottom: 20px;
-  border-radius: 10px;
+  border-radius: 6px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -119,6 +125,9 @@ export default {
 @media (max-width: 650px) { 
 .maincontainer {
   margin-bottom: 20px;
+}
+.BlankSpace{
+  height: 40px;
 }
 }
 

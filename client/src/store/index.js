@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const store = createStore({
     state: {
+        isLoading: false,
         deviceIsValid: false,
         deviceId: '',
         deviceName: '',
@@ -157,6 +158,9 @@ const store = createStore({
         SET_INDIA_CITIES(state, data) {
             state.indiaCities = data;
         },
+        SET_LOADING(state, payload) {
+            state.isLoading = payload;
+          },
     },
       actions: {
         async fetchData({ commit }) {
@@ -176,6 +180,9 @@ const store = createStore({
             console.error('Error fetching data:', error);
         }
         },
+        setLoading({ commit }, payload) {
+            commit('SET_LOADING', payload);
+          },
     },
     getters: {
         toGetDeviceValid(state) {

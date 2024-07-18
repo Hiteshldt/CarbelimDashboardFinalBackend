@@ -1,6 +1,6 @@
 <template>
-  <div class="col-12 col-lg-8 order-1 order-md-2">
-    <div class="my-3 Card border border-1 rounded-3 shadow-lg card-with-bg">
+  <div class="col-12 col-lg-8 order-1 order-md-2 topContainer">
+    <div class="my-3 Card border border-1 rounded-3 card-with-bg">
       <div class="py-3 d-flex justify-content-center align-items-center">
         <h2 class="card-pollutants-title">Major Air Pollutants in India</h2>
         <img src="https://www.aqi.in/assets/images/live-rank-icon.png" width="14" height="14" alt="live rank icon">
@@ -168,7 +168,7 @@ export default {
 .dynamic-airquality {
   padding: 0.5rem;
   border-radius: 0.25rem;
-  color: #fff;
+  color: #ffffff;
 }
 
 .times-value {
@@ -176,9 +176,11 @@ export default {
 }
 
 .card-with-bg {
+  background-color: #ffffff;
   background-image: url('https://www.aqi.in/assets/images/india_map_shape_new_3.png');
   background-position: bottom;
   background-size: 100% 15%;
   background-repeat: no-repeat;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 </style>
