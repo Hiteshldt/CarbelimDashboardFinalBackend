@@ -9,7 +9,7 @@ dotenv.config();
 const app = express();
 app.use(cookieParser());
 const corsOptions = {
-    origin: 'http://localhost:8080', // Update with your Vue app's development server
+    origin: process.env.NODE_ENV === 'production' ? 'https://your-production-url.com' : 'http://localhost:8080',
     credentials: true
 };
 app.use(cors(corsOptions));
