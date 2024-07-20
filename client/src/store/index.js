@@ -166,10 +166,10 @@ const store = createStore({
         async fetchData({ commit }) {
         try {
             const [aqiIndiaResponse, pollutantsIndiaResponse, aqiWorldResponse, indiaCitiesResponse] = await Promise.all([
-            axios.get('http://localhost:3000/aqi/india'),
-            axios.get('http://localhost:3000/pollutants/india'),
-            axios.get('http://localhost:3000/aqi/world'),
-            axios.get('http://localhost:3000/aqi/india/cities'),
+            axios.get(`${process.env.VUE_APP_BACKEND_URL}/aqi/india`),
+            axios.get(`${process.env.VUE_APP_BACKEND_URL}/pollutants/india`),
+            axios.get(`${process.env.VUE_APP_BACKEND_URL}/aqi/world`),
+            axios.get(`${process.env.VUE_APP_BACKEND_URL}/aqi/india/cities`),
             ]);
 
             commit('SET_AQI_INDIA', aqiIndiaResponse.data);

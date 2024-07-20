@@ -52,7 +52,7 @@ export default {
       this.loading = true;
       this.showOptions = false;
       try {
-        const response = await axios.get('http://localhost:3000/downloaddata', {
+        const response = await axios.get(`${process.env.VUE_APP_BACKEND_URL}/downloaddata`, {
           params: {
             deviceid: this.deviceIdValue,
             range: range + 'month',

@@ -61,7 +61,7 @@ export default {
     async getGraphData() {
       if (this.isDeviceValid) {
         try {
-          const response = await axios.get(`http://localhost:3000/graphdata`, {
+          const response = await axios.get(`${process.env.VUE_APP_BACKEND_URL}/graphdata`, {
             params: {
               deviceid: this.deviceIdValue,
               range: this.selectedTimeRange,

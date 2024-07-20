@@ -150,7 +150,7 @@ export default {
             });
 
             try {
-                const response = await axios.post('http://localhost:3000/dashboardverify', { data: this.deviceid }, { withCredentials: true });
+                const response = await axios.post(`${process.env.VUE_APP_BACKEND_URL}/dashboardverify`, { data: this.deviceid }, { withCredentials: true });
                 if (response.data.success) {
                     const devicevalid = Cookies.get('devicevalid');
                     if (devicevalid) {
@@ -174,7 +174,7 @@ export default {
         async checkDeviceValidity() {
             if (this.isDeviceValid) {
                 try {
-                    const response = await axios.get(`http://localhost:3000/togetrealtimedata?deviceid=${this.deviceIdValue}`, { withCredentials: true });
+                    const response = await axios.get(`${process.env.VUE_APP_BACKEND_URL}/togetrealtimedata?deviceid=${this.deviceIdValue}`, { withCredentials: true });
 
                     console.log(response.data);
                     const responseData = response.data;

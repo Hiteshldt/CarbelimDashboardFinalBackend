@@ -42,7 +42,7 @@ export default {
       const body = { [`relay${this.id.split('-')[1]}`]: command };
       console.log(body)
       try {
-        const response = await axios.post(`http://localhost:3000/relaycontrol?deviceid=${this.deviceIdValue}`, body);
+        const response = await axios.post(`${process.env.VUE_APP_BACKEND_URL}/relaycontrol?deviceid=${this.deviceIdValue}`, body);
         // Handle the response if needed
         console.log('Response:', response.data);
       } catch (error) {
