@@ -1,17 +1,16 @@
 <template>
-  <div class="button-container">
-    <transition name="fade">
-      <div v-if="!confirmRemove" key="remove-button">
-        <button @click="confirmRemove = true">Remove Device</button>
-      </div>
-      <div v-else key="confirm-buttons" class="confirm-container">
-        <p>Are you sure?</p>
-        <div class="button-group">
+  <div class="card">
+    <div class="button-container">
+      <transition name="fade" mode="out-in">
+        <div v-if="!confirmRemove" key="remove-button">
+          <button @click="confirmRemove = true">Remove Device</button>
+        </div>
+        <div v-else key="confirm-buttons" class="confirm-container">
           <button @click="removeDevice">Yes</button>
           <button @click="confirmRemove = false">Cancel</button>
         </div>
-      </div>
-    </transition>
+      </transition>
+    </div>
   </div>
 </template>
 
@@ -39,6 +38,14 @@ export default {
 </script>
 
 <style scoped>
+
+.card {
+  margin: 10px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
 .button-container {
   margin-top: 20px;
   text-align: center;
@@ -67,12 +74,6 @@ button:focus {
 
 .confirm-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.button-group {
-  display: flex;
   justify-content: center;
   gap: 10px;
 }
@@ -90,15 +91,12 @@ button:focus {
   }
 }
 
-button + button {
-  margin-left: 10px;
-}
-
 .fade-enter-active, .fade-leave-active {
-  transition: opacity 0.5s;
+  transition: opacity 0.5s, transform 0.5s;
 }
 
 .fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
   opacity: 0;
+  transform: scale(0.9);
 }
 </style>

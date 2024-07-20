@@ -20,11 +20,11 @@
     </nav>
     <div class="navbar__bottom-bar" v-if="isMobile">
       <ul class="navbar__bottom-links">
-        <li><router-link to="/"><i class="fas fa-home"></i></router-link></li>
-        <li><router-link to="/graph"><i class="fas fa-chart-bar"></i></router-link></li>
-        <li><router-link to="/dashboard"><i class="fas fa-tachometer-alt"></i></router-link></li>
+        <li><router-link to="/"><img class="navicon" src="../assets/icons/home.svg" alt=""></router-link></li>
+        <li><router-link to="/graph"><img class="navicon" src="../assets/icons/stats.svg" alt=""></router-link></li>
+        <li><router-link to="/dashboard"><img class="navicon" src="../assets/icons/dashboard.svg" alt=""></router-link></li>
         <!-- <li><router-link to="/signup"><i class="fas fa-user"></i></router-link></li> -->
-        <li><router-link to="/about"><i class="fas fa-info-circle"></i></router-link></li>
+        <li><router-link to="/about"><img class="navicon" src="../assets/icons/info.svg" alt=""></router-link></li>
       </ul>
     </div>
   </header>
@@ -53,8 +53,13 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+.navicon {
+  filter: invert() brightness(80%);
+  height: 24px;
+  width: 24px;
+}
 
 .navbar {
   font-family: Roboto;
@@ -106,7 +111,8 @@ export default {
 
 .navbar__bottom-bar {
   position: fixed;
-  bottom: 0;
+  bottom: -1rem;
+  height: 4.8rem;;
   left: 0;
   width: 100%;
   background-color: #1f2937;
@@ -164,6 +170,11 @@ export default {
 .navbar__bottom-links a:hover {
   background-color: #3e4752;
   color: #fff;
+}
+
+.navbar__bottom-links a i {
+  font-size: 1.4rem; /* Ensure icons are the right size */
+  color: inherit; /* Ensure icons inherit the text color */
 }
 
 @media (max-width: 650px) {

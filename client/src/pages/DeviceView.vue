@@ -1,6 +1,5 @@
 <template>
-  <div>
-
+  <div class="mainContainer">
     <div v-if="splicedDeviceIdComponent === '201'">
       <div class="device-card">
         <div class="gradient-overlay"></div>
@@ -10,9 +9,9 @@
           <h2 class="device-time" v-else>{{ deviceTime }}</h2>
         </div>
       </div>
-      <CardsContainer :dashboardname="'AirSensor'" :cards="$store.state.devices.C201.A"></CardsContainer>
-      <CardsContainer :dashboardname="'WaterSensor'" :cards="$store.state.devices.C201.W"></CardsContainer>
-      <RelayContainer :dashboardname="'Relay'" :cards="$store.state.devices.C201.R"></RelayContainer>
+      <CardsContainer :dashboardname="'Air Parameters'" :cards="$store.state.devices.C201.A"></CardsContainer>
+      <CardsContainer :dashboardname="'Water Parameters'" :cards="$store.state.devices.C201.W"></CardsContainer>
+      <RelayContainer :dashboardname="'Relay Control'" :cards="$store.state.devices.C201.R"></RelayContainer>
       <RemoveDeviceButton />
     </div>
     
@@ -25,7 +24,7 @@
           <p class="device-time" v-else>Invalid time</p>
         </div>
       </div>
-      <CardsContainer :dashboardname="'WaterSensor'" :cards="$store.state.devices.C202.W"></CardsContainer>
+      <CardsContainer :dashboardname="'Water Parameters'" :cards="$store.state.devices.C202.W"></CardsContainer>
       <RelayContainer :dashboardname="'Relay'" :cards="$store.state.devices.C202.R"></RelayContainer>
       <RemoveDeviceButton />
     </div>
@@ -39,7 +38,7 @@
           <p class="device-time" v-else>Invalid time</p>
         </div>
       </div>
-      <CardsContainer :dashboardname="'AirSensor'" :cards="$store.state.devices.C203.A"></CardsContainer>
+      <CardsContainer :dashboardname="'Air Parameters'" :cards="$store.state.devices.C203.A"></CardsContainer>
       <RemoveDeviceButton />
     </div>
     <div class="BlankSpace"></div>
@@ -92,12 +91,22 @@ export default {
 </script>
 
 <style scoped>
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+    padding: 5px 15px 15px 15px;
+    text-align: center;
+    background: #ffffff;
+    margin: 15px 20px;
+  }
+
 .device-card {
   position: relative;
   background-image: url('../assets/images/Park-with-people.jpg'); /* Replace with your image path */
   background-size: cover;
   background-position: center;
-  border-radius: 20px;
+  border-radius: 14px;
   height: 140px; /* Adjusted height, 30% less than the original 200px */
   margin: 20px;
   display: flex;
@@ -145,9 +154,10 @@ export default {
 
 @media (max-width: 650px) {
   .BlankSpace {
-    height: 70px;
+    height: 90px;
   }
   .device-card {
+    margin-top: 50px;
     height: 105px; /* 30% less than the original 150px for smaller screens */
   }
 }
