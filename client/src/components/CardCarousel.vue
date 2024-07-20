@@ -1,6 +1,5 @@
 <template>
     <div>
-        <button key="button">Instructions</button>
         <div class="container my-2">
         <Carousel v-bind="settings" :breakpoints="breakpoints">
             <Slide v-for="(card, index) in cardDetails" :key="index">
@@ -89,25 +88,14 @@
   </script>
   
   <style scoped>
-  button {
-    margin: 0px 6%;
-    margin-top: 10px;
-    width: 88%;
-    padding: 10px;
-    background-color: #572c4e;
-    border: none;
-    border-radius: 4px;
-    color: white;
-    font-size: 18px;
-    cursor: pointer;
-  }
   h3 {
     margin-top: 15px;
     text-align: center;
     justify-content: center;
   }
+
   .container {
-    margin-top: 0rem;
+    margin-top: 20px;
   }
   
   .row {

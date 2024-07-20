@@ -46,19 +46,16 @@ export default {
           name: 'NEW DELHI',
           image: require('../assets/images/DelhiIcon.png'),
           aqi: getAQI('NEW DELHI'),
-          temprature: '35°C / 61%' // You can dynamically fetch this data if available
         },
         {
           name: 'MUMBAI',
           image: require('../assets/images/MumbaiIcon.png'),
           aqi: getAQI('MUMBAI'),
-          temprature: '35°C / 61%'
         },
         {
           name: 'KOLKATA',
           image: require('../assets/images/KolkataIcon.png'),
           aqi: getAQI('KOLKATA'),
-          temprature: '35°C / 61%'
         }
       ];
     }
