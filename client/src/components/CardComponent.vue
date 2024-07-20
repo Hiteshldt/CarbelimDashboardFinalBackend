@@ -1,7 +1,9 @@
 <template>
   <div class="card">
     <div class="card-header">
-      <img :src="iconPath" alt="icon" class="icon"/>
+      <div class="iconContainer">
+        <img :src="iconPath" alt="icon" class="icon"/>
+      </div>
       <span class="card-title">{{ name }}</span>
     </div>
     <div class="card-body">
@@ -16,20 +18,20 @@
 </template>
 
 <script>
-import AAQI from '@/icons/AAQI.svg';
-import ACo2 from '@/icons/ACo2.svg';
-import AHCHO from '@/icons/AHCHO.svg';
-import APM1 from '@/icons/APM1.svg';
-import APM10 from '@/icons/APM10.svg';
-import APM25 from '@/icons/APM25.svg';
-import ATemp from '@/icons/ATemp.svg';
-import ATVOC from '@/icons/ATVOC.svg';
-import WPh from '@/icons/WPh.svg';
-import WDo from '@/icons/WDo.svg';
-import WEc from '@/icons/WPh.svg';
-import WTDs from '@/icons/WTDs.svg';
-import WTemp from '@/icons/WTemp.svg';
-import WTurb from '@/icons/WTurb.svg';
+import AAQI from '../assets/icons/AAQI.svg';
+import ACo2 from '../assets/icons/ACo2.svg';
+import AHCHO from '../assets/icons/AHCHO.svg';
+import APM1 from '../assets/icons/APM1.svg';
+import APM10 from '../assets/icons/APM10.svg';
+import APM25 from '../assets/icons/APM25.svg';
+import ATemp from '../assets/icons/ATemp.svg';
+import ATVOC from '../assets/icons/ATVOC.svg';
+import WPh from '../assets/icons/WPh.svg';
+import WDo from '../assets/icons/WDo.svg';
+import WEc from '../assets/icons/WPh.svg';
+import WTDs from '../assets/icons/WTDs.svg';
+import WTemp from '../assets/icons/WTemp.svg';
+import WTurb from '../assets/icons/WTurb.svg';
 // Import other SVGs similarly
 
 export default {
@@ -123,10 +125,17 @@ export default {
 </script>
 
 <style scoped>
+.iconContainer {
+  margin: 0px;
+  padding: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .card {
+  margin: 0px;
   background-color: #ffffff;
   border-radius: 10px;
-  padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
@@ -138,23 +147,29 @@ export default {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 .card-header {
+  padding: -10px;
   display: flex;
   align-items: center;
+  justify-content: center;
   margin-bottom: 15px;
+  background-color:floralwhite;
+  width: 100%;
+  box-sizing: border-box;
 }
 .icon {
-  width: 32px;
-  height: 32px;
+  text-align: center;
+  width: 41px;
+  height: 41px;
   margin-right: 10px;
 }
 .card-title {
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: 1.1em;
   color: #333;
 }
 .value {
   font-weight: 500;
-  font-size: 1.2em;
+  font-size: 1.1em;
   text-align: center;
   width: 100%;
   margin-top: 10px;
@@ -162,7 +177,7 @@ export default {
 .progress-bar {
   margin-top: 10px;
   width: 100%;
-  min-width: 60px;
+  min-width: 50px;
   background-color: #e0e0e0;
   border-radius: 5px;
   height: 12px;
@@ -173,6 +188,7 @@ export default {
   transition: width 0.5s ease, background-color 0.5s ease; /* Smooth animation */
 }
 .card-body {
+  margin-top: -15px;
   text-align: center;
   width: 100%;
 }
@@ -181,5 +197,23 @@ export default {
 }
 .value-change-enter, .value-change-leave-to /* .value-change-leave-active in <2.1.8 */ {
   opacity: 0;
+}
+
+@media (max-width: 600px) {
+  .card-header {
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+  }
+  .card-title {
+    font-size: 1.1rem;
+    margin-left: -5px;
+  }
+  .icon {
+    width: 35px;
+    height: 35px;
+    margin-right: 0px;
+    margin-top: 2px;
+  }
 }
 </style>

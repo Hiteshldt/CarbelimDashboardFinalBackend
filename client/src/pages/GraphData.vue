@@ -1,75 +1,57 @@
 <template>
-    <div>
-        <div class="deviceinput" v-if="!isDeviceValid">
-            <div class="login-box">
-                <router-link to="/dashboard"><button>Add device at Dashboard</button></router-link>
-            </div>
-        </div>
-        <div v-if="isDeviceValid">
-            <graph-view></graph-view>
-            <graphs></graphs>
-        </div>
+  <div class="container">
+    <div class="deviceinput" v-if="!isDeviceValid">
+      <div class="login-box">
+        <router-link to="/dashboard"><button>Add device at Dashboard</button></router-link>
+      </div>
     </div>
+    <div v-if="isDeviceValid">
+      <graph-view></graph-view>
+      <div id="app">
+        <graphs></graphs>
+      </div>
+      <donwload-data-page></donwload-data-page>
+      <div class="BlankSpace"></div>
+    </div>
+  </div>
 </template>
 
 <script>
+import DonwloadDataPage from '../components/DonwloadDataPage.vue';
 import Graphs from '../components/GraphsPage.vue';
 import GraphView from './GraphView.vue';
 
 export default {
-  components: { GraphView, Graphs },
-    computed: {
-        isDeviceValid() {
-            return this.$store.getters.toGetDeviceValid;
-        },
-        deviceIdValue() {
-            return this.$store.getters.toGetDeviceId;
-        }
+  components: { GraphView, Graphs, DonwloadDataPage },
+  computed: {
+    isDeviceValid() {
+      return this.$store.getters.toGetDeviceValid;
     },
+    deviceIdValue() {
+      return this.$store.getters.toGetDeviceId;
+    }
+  },
 }
-
 </script>
 
 <style scoped>
-h2 {
-    text-align: center;
-    display: flex;
+.container {
+  max-width: 100vw;
+  overflow-x: hidden;
 }
-.deviceId{
-   margin: 0px 20px;
-   border-radius: 20px;
+
+.BlankSpace {
+  height: 20px;
+}
+
+#app {
+  align-content: center;
+  padding: 0px;
+  margin: 0px;
 }
 
 .deviceinput {
-    margin: 30px 30px;
-}
-
-.login-box h2 {
-  margin-bottom: 20px;
-  font-size: 28px;
-  color: #333;
-}
-
-.input-group {
-    display: flex;
-  font-size: 16px;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.input-group i {
-  font-size: 18px;
-  margin-right: 10px;
-  color: #999;
-}
-
-.input-group input {
-  align-items: start;
-  font-size: 18px;
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  margin: 30px;
 }
 
 button {
@@ -81,9 +63,19 @@ button {
   color: white;
   font-size: 18px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
   background-color: #0056b3;
+}
+
+@media (max-width: 650px) {
+  .BlankSpace {
+    height: 90px;
+  }
+  .device-card {
+    height: 105px; /* 30% less than the original 150px for smaller screens */
+  }
 }
 </style>

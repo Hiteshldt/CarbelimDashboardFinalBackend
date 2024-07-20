@@ -42,7 +42,7 @@ export default {
       const body = { [`relay${this.id.split('-')[1]}`]: command };
       console.log(body)
       try {
-        const response = await axios.post(`http://localhost:3000/relaycontrol?deviceid=${this.deviceIdValue}`, body);
+        const response = await axios.post(`${process.env.VUE_APP_BACKEND_URL}/relaycontrol?deviceid=${this.deviceIdValue}`, body);
         // Handle the response if needed
         console.log('Response:', response.data);
       } catch (error) {
@@ -71,10 +71,15 @@ export default {
 </script>
 
 <style scoped>
+.card-title{
+  text-align: center;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: rgb(243, 243, 243);
+}
 .card {
   background-color: #ffffff;
   border-radius: 10px;
-  padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
@@ -86,9 +91,14 @@ export default {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 .card-header {
+  padding: -10px;
   display: flex;
   align-items: center;
-  margin-bottom: 15px;
+  justify-content: center;
+  margin-bottom: 5px;
+  background-color:rgb(252, 252, 252);
+  width: 100%;
+  box-sizing: border-box;
 }
 .card-title {
   font-weight: bold;
@@ -137,5 +147,19 @@ input:checked + label:before {
 }
 .card-body {
   text-align: center;
+  margin-top: -10px;
+  padding: -10px;
+}
+
+@media (max-width: 600px) {
+  .card-title{
+    padding: auto+2px auto+1px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .card-title{
+    padding: 14px 34px;
+  }
 }
 </style>
