@@ -9,7 +9,7 @@ dotenv.config();
 const app = express();
 app.use(cookieParser());
 const corsOptions = {
-    origin: process.env.NODE_ENV === 'production' ? 'https://your-production-url.com' : 'http://localhost:8080',
+    origin: `http://localhost:${process.env.PORT}`,
     credentials: true
 };
 app.use(cors(corsOptions));
