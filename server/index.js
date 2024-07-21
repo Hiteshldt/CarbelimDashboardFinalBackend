@@ -9,7 +9,7 @@ dotenv.config();
 const app = express();
 app.use(cookieParser());
 const corsOptions = {
-    origin: `http://localhost:${process.env.PORT}`,
+    origin: `http://localhost:8080`,
     credentials: true
 };
 app.use(cors(corsOptions));
@@ -189,7 +189,7 @@ async function toHandleDevice(req, res) {
         const response = await axios.get(`https://q17jj3lu0l.execute-api.ap-south-1.amazonaws.com/dev/data/realtime?deviceid=${deviceId}`);
         if (response.data === "No data found for the given device ID") {
             console.log('Device Invalid');
-            res.json({message: 'DeviceIdError'});
+            res.status(404).json({ message: 'DeviceIdError', error: 'No data found for the given device ID' });
         } else {
             console.log('Device Connected');
             const cookieValue = JSON.stringify({
@@ -200,12 +200,11 @@ async function toHandleDevice(req, res) {
                 maxAge: 24 * 60 * 60 * 1000 // 1 day in milliseconds
             });
             res.json({ success: true });
-            console.log('cookiesent')
+            console.log('cookie sent');
         }
-    }
-    catch(error) {
-        console.log("DeviceIdError");
-        res.json({message: 'DeviceIdError'});
+    } catch (error) {
+        console.error('Error fetching device data:', error.message);
+        res.status(500).json({ message: 'DeviceIdError', error: 'Failed to fetch device data' });
     }
 }
 
@@ -214,25 +213,23 @@ async function toHandleRealtimData(req, res) {
     try {
         const response = await axios.get(`https://q17jj3lu0l.execute-api.ap-south-1.amazonaws.com/dev/data/realtime?deviceid=${deviceid}`);
         res.json(response.data);
-        console.log("data retrived success and sent");
+        console.log("Data retrieved successfully and sent");
     } catch (error) {
-        console.log('Error fetching data from external API:');
-        res.status(500).json({ error: 'Failed to fetch data from external API' });
+        console.error('Error fetching real-time data:', error.message);
+        res.status(500).json({ error: 'Failed to fetch real-time data from external API' });
     }
 }
 
 async function toHandleRelayControl(req, res) {
-    const { deviceid } = req.query; // Extracting deviceid from query parameters
-    const body = req.body; // Extracting body from request body
+    const { deviceid } = req.query; 
+    const body = req.body;
 
     try {
         const response = await axios.post(`https://q17jj3lu0l.execute-api.ap-south-1.amazonaws.com/dev/commands?deviceid=${deviceid}`, body);
-        // Handle response from the external API
         console.log('Response from external command API:', response.data);
-        // Send response back to the frontend
         res.json({ success: true, message: 'Command sent successfully', data: response.data });
     } catch (error) {
-        console.error('Error sending command:', error);
+        console.error('Error sending command:', error.message);
         res.status(500).json({ error: 'Failed to send command to external API' });
     }
 }
