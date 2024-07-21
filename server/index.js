@@ -9,7 +9,7 @@ dotenv.config();
 const app = express();
 app.use(cookieParser());
 const corsOptions = {
-    origin: `http://localhost:8080`,
+    origin: `https://carbelimdashboardfrontenddeploy.onrender.com`,  //Change this to the access link of webapp
     credentials: true
 };
 app.use(cors(corsOptions));
