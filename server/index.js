@@ -8,10 +8,24 @@ dotenv.config();
 
 const app = express();
 app.use(cookieParser());
+
+const allowedOrigins = ['https://carbelimdashboardfrontenddeploy.onrender.com'];
+
 const corsOptions = {
+<<<<<<< HEAD
     origin: `https://carbelimdashboardfrontenddeploy.onrender.com`,  //Change this to the access link of webapp
+=======
+    origin: function (origin, callback) {
+        if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+>>>>>>> 2ce1326 (Backend Updated with Samesite: None)
     credentials: true
 };
+
 app.use(cors(corsOptions));
 app.use(express.json());
 
@@ -197,7 +211,10 @@ async function toHandleDevice(req, res) {
                 deviceId: deviceId
             });
             res.cookie('devicevalid', cookieValue, { 
-                maxAge: 24 * 60 * 60 * 1000 // 1 day in milliseconds
+                maxAge: 24 * 60 * 60 * 1000, // 1 day in milliseconds
+                httpOnly: true,
+                secure: true, // Ensure this is only set to true in production
+                sameSite: 'None'
             });
             res.json({ success: true });
             console.log('cookie sent');
