@@ -12,9 +12,6 @@ app.use(cookieParser());
 const allowedOrigins = ['https://carbelimdashboardfrontenddeploy.onrender.com'];
 
 const corsOptions = {
-<<<<<<< HEAD
-    origin: `https://carbelimdashboardfrontenddeploy.onrender.com`,  //Change this to the access link of webapp
-=======
     origin: function (origin, callback) {
         if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
             callback(null, true);
@@ -22,7 +19,6 @@ const corsOptions = {
             callback(new Error('Not allowed by CORS'));
         }
     },
->>>>>>> 2ce1326 (Backend Updated with Samesite: None)
     credentials: true
 };
 
