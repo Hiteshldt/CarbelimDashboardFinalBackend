@@ -208,7 +208,6 @@ async function toHandleDevice(req, res) {
             });
             res.cookie('devicevalid', cookieValue, { 
                 maxAge: 24 * 60 * 60 * 1000, // 1 day in milliseconds
-                httpOnly: true,
                 secure: true, // Ensure this is only set to true in production
                 sameSite: 'None'
             });
