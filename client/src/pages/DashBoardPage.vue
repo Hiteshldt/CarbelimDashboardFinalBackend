@@ -167,7 +167,7 @@ export default {
                     Swal.fire('Error', response.data.message || 'Failed to add device', 'error');
                 }
             } catch (error) {
-                console.error(error);
+                console.log(error);
                 Swal.fire('Error', 'An error occurred', 'error');
             }
         },
@@ -210,6 +210,7 @@ export default {
                     }
 
                 } catch (error) {
+                    console.log(error);
                     console.error('Error fetching real-time data:', error);
                     Swal.fire({
                         icon: 'error',

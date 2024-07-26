@@ -10,7 +10,8 @@ const app = express();
 app.use(cookieParser());
 
 const allowedOrigins = ['https://carbelimdashboardfrontenddeploy.onrender.com'];
-// const allowedOrigins = ['http://localhost:8080'] To run locally
+// const allowedOrigins = ['http://localhost:8080']
+// To run locally
 
 const corsOptions = {
     origin: function (origin, callback) {
@@ -208,10 +209,11 @@ async function toHandleDevice(req, res) {
                 deviceId: deviceId
             });
             res.cookie('devicevalid', cookieValue, { 
-                maxAge: 24 * 60 * 60 * 1000, // 1 day in milliseconds
-                // httpOnly: true, Include this for only allowing http site data
-                secure: true, // Ensure this is only set to true in production
-                sameSite: 'None'
+                path: '/',
+                secure: true,
+                httpOnly: true,
+                sameSite: 'None',
+                expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) // 1 week
             });
             res.json({ success: true });
             console.log('cookie sent');

@@ -21,7 +21,7 @@ const routes = [
   { path: '/:AnyOther(.*)', redirect: '/home' },
 ];
 
-function authGuard(to, from, next) {
+async function authGuard(to, from, next) {
   store.dispatch('setLoading', true);
   const devicevalid = Cookies.get('devicevalid');
   if (devicevalid) {
@@ -30,6 +30,7 @@ function authGuard(to, from, next) {
     const deviceId = deviceData.deviceId;
     store.commit('SET_DEVICE_VALIDITY', deviceIsValid);
     store.commit('SET_DEVICE_ID', deviceId);
+    console.log("autGuard retrived data" + deviceData);
   }
   next();
 }
