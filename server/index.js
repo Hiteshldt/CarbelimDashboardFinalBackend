@@ -210,6 +210,9 @@ async function toHandleDevice(req, res) {
             });
             res.cookie('devicevalid', cookieValue, { 
                 path: '/',
+                secure: false,
+                httpOnly: false,
+                sameSite: 'None',
                 expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) // 1 week
             });
             res.json({ success: true });
