@@ -137,7 +137,7 @@ export default {
         updateSetView() {
             this.setView = !this.setView;
         },
-        async toCheckDeviceId() {
+    async toCheckDeviceId() {
             Swal.fire({
                 title: 'Adding Device',
                 text: 'Please wait...',
@@ -152,18 +152,21 @@ export default {
             try {
                 const response = await axios.post(`${process.env.VUE_APP_BACKEND_URL}/dashboardverify`, { data: this.deviceid }, { withCredentials: true });
                 if (response.data.success) {
-                    const devicevalid = Cookies.get('devicevalid');
-                    if (devicevalid) {
-                        console.log('Received cookie:', devicevalid); // Console log the cookie value
-                        const deviceData = JSON.parse(decodeURIComponent(devicevalid));
-                        const deviceIsValid = deviceData.deviceIsValid;
-                        const deviceId = deviceData.deviceId;
-                        this.$store.commit('SET_DEVICE_VALIDITY', deviceIsValid);
-                        this.$store.commit('SET_DEVICE_ID', deviceId);
-                        Swal.fire('Success', 'Device added successfully', 'success');
-                    } else {
-                        Swal.fire('Error', 'Failed to add device', 'error');
-                    }
+                    const cookieValue = JSON.stringify({
+                        deviceIsValid: response.data.deviceIsValid,
+                        deviceId: response.data.deviceId
+                    });
+                    Cookies.set('devicevalid', cookieValue, { 
+                        path: '/',
+                        secure: false,
+                        httpOnly: false,
+                        sameSite: 'None',
+                        expires: 7 // 1 week
+                    });
+                    console.log('Cookie set:', cookieValue); // Console log the cookie value
+                    this.$store.commit('SET_DEVICE_VALIDITY', response.data.deviceIsValid);
+                    this.$store.commit('SET_DEVICE_ID', response.data.deviceId);
+                    Swal.fire('Success', 'Device added successfully', 'success');
                 } else {
                     Swal.fire('Error', response.data.message || 'Failed to add device', 'error');
                 }

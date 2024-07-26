@@ -204,19 +204,12 @@ async function toHandleDevice(req, res) {
             res.status(404).json({ message: 'DeviceIdError', error: 'No data found for the given device ID' });
         } else {
             console.log('Device Connected');
-            const cookieValue = JSON.stringify({
+            res.json({
+                success: true,
                 deviceIsValid: true,
                 deviceId: deviceId
             });
-            res.cookie('devicevalid', cookieValue, { 
-                path: '/',
-                secure: false,
-                httpOnly: false,
-                sameSite: 'None',
-                expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) // 1 week
-            });
-            res.json({ success: true });
-            console.log('cookie sent');
+            console.log('Response sent');
         }
     } catch (error) {
         console.error('Error fetching device data:', error.message);
