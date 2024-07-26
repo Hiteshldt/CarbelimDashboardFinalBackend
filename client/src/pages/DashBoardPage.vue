@@ -154,6 +154,7 @@ export default {
                 if (response.data.success) {
                     const devicevalid = Cookies.get('devicevalid');
                     if (devicevalid) {
+                        console.log('Received cookie:', devicevalid); // Console log the cookie value
                         const deviceData = JSON.parse(decodeURIComponent(devicevalid));
                         const deviceIsValid = deviceData.deviceIsValid;
                         const deviceId = deviceData.deviceId;

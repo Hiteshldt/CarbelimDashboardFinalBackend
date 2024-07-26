@@ -25,15 +25,17 @@ async function authGuard(to, from, next) {
   store.dispatch('setLoading', true);
   const devicevalid = Cookies.get('devicevalid');
   if (devicevalid) {
+    console.log('Received cookie:', devicevalid); // Console log the cookie value
     const deviceData = JSON.parse(decodeURIComponent(devicevalid));
     const deviceIsValid = deviceData.deviceIsValid;
     const deviceId = deviceData.deviceId;
     store.commit('SET_DEVICE_VALIDITY', deviceIsValid);
     store.commit('SET_DEVICE_ID', deviceId);
-    console.log("autGuard retrived data" + deviceData);
+    console.log('authGuard retrieved data:', deviceData);
   }
   next();
 }
+
 
 const router = createRouter({
   history: createWebHistory(),
