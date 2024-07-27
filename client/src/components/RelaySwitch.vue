@@ -45,6 +45,7 @@ export default {
         const response = await axios.post(`${process.env.VUE_APP_BACKEND_URL}/relaycontrol?deviceid=${this.deviceIdValue}`, body);
         // Handle the response if needed
         console.log('Response:', response.data);
+        console.log('Deviceid use for toggle relay', this.deviceIdValue)
       } catch (error) {
         console.error('Error sending request:', error);
       } finally {

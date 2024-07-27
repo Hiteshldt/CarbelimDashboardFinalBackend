@@ -84,6 +84,8 @@ const store = createStore({
                     { id: 'Ahch', name: 'HCHO', unit: 'ppm', value: 0, icon: 'AHCHO',  low: 0.01, mid: 0.03, high: 0.06},
                     { id: 'Atem', name: 'Temp', unit: '°C', value: 0, icon: 'ATemp',  low: 10, mid: 25, high: 45},
                 ],
+                R: [
+                ],
                 G: [
                     { id: 'Aaq', name: 'Air-AQI'}, { id: 'Aco', name: 'Air-CO2'},{ id: 'Ap1', name: 'Air-PM1.0'},{ id: 'Ap25', name: 'Air-PM2.5'},
                     { id: 'Ap10', name: 'Air-PM10'},{ id: 'Atvo', name: 'Air-TVOC'},{ id: 'Ahch', name: 'Air-HCHO'},{ id: 'Atem', name: 'Air-Temp'},

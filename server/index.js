@@ -9,8 +9,8 @@ dotenv.config();
 const app = express();
 app.use(cookieParser());
 
-const allowedOrigins = ['https://carbelimdashboardfrontenddeploy.onrender.com'];
-// const allowedOrigins = ['http://localhost:8080']
+// const allowedOrigins = ['https://carbelimdashboardfrontenddeploy.onrender.com'];
+const allowedOrigins = ['http://localhost:8080']
 // To run locally
 
 const corsOptions = {
@@ -236,6 +236,7 @@ async function toHandleRelayControl(req, res) {
     try {
         const response = await axios.post(`https://q17jj3lu0l.execute-api.ap-south-1.amazonaws.com/dev/commands?deviceid=${deviceid}`, body);
         console.log('Response from external command API:', response.data);
+        console.log("body", )
         res.json({ success: true, message: 'Command sent successfully', data: response.data });
     } catch (error) {
         console.error('Error sending command:', error.message);
