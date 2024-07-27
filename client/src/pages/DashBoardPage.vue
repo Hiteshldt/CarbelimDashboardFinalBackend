@@ -158,8 +158,7 @@ export default {
                     });
                     Cookies.set('devicevalid', cookieValue, { 
                         path: '/',
-                        secure: false,
-                        httpOnly: false,
+                        secure: true,
                         sameSite: 'None',
                         expires: 7 // 1 week
                     });

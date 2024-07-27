@@ -36,7 +36,6 @@ async function authGuard(to, from, next) {
   next();
 }
 
-
 const router = createRouter({
   history: createWebHistory(),
   routes,
