@@ -11,19 +11,21 @@ app.use(cookieParser());
 
 const allowedOrigins = [
     'https://carbelimdashboardfrontenddeploy.onrender.com',
-    'capacitor://localhost'
-    // 'http://localhost:8080' // Uncomment for local development
+    'http://localhost:8080'
 ];
 
 const corsOptions = {
     origin: function (origin, callback) {
-        if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
+        // Allow requests with no origin (like mobile apps, curl, etc)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {
+            const msg = 'The CORS policy for this site does not allow access from the specified origin.';
+            return callback(new Error(msg), false);
         }
+        return callback(null, true);
     },
-    credentials: true
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 };
 
 app.use(cors(corsOptions));
