@@ -12,7 +12,8 @@ app.use(cookieParser());
 const allowedOrigins = [
     'https://carbelimdashboardfrontenddeploy.onrender.com',
     'http://localhost:8080', // To run locally
-    'capacitor://localhost' // To allow requests from the Capacitor Android app
+    'capacitor://localhost', // To allow requests from the Capacitor Android app
+    'https://localhost'
 ];
 
 const corsOptions = {
