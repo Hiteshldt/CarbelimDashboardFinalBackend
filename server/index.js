@@ -9,24 +9,9 @@ dotenv.config();
 const app = express();
 app.use(cookieParser());
 
-const allowedOrigins = [
-    'https://carbelimdashboardfrontenddeploy.onrender.com',
-    'http://localhost:8080'
-];
-
 const corsOptions = {
-    origin: function (origin, callback) {
-        // Allow requests with no origin (like mobile apps, curl, etc)
-        if (!origin) return callback(null, true);
-        if (allowedOrigins.indexOf(origin) === -1) {
-            const msg = 'The CORS policy for this site does not allow access from the specified origin.';
-            return callback(new Error(msg), false);
-        }
-        return callback(null, true);
-    },
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true // Added to allow credentials
+  origin: '*',
+  optionsSuccessStatus: 200,
 };
 
 app.use(cors(corsOptions));
