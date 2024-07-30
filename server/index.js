@@ -8,11 +8,21 @@ dotenv.config();
 
 const app = express();
 app.use(cookieParser());
+const allowedOrigins = [
+    'https://carbelimdashboardfrontenddeploy.onrender.com',
+    'http://localhost:8080', // To run locally
+    'capacitor://localhost' // To allow requests from the Capacitor Android app
+];
 
 const corsOptions = {
-    origin: true, // Allow any origin
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true
 };
 
 app.use(cors(corsOptions));
