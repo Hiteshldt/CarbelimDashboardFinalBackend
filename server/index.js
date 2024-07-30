@@ -9,9 +9,11 @@ dotenv.config();
 const app = express();
 app.use(cookieParser());
 
-const allowedOrigins = ['https://carbelimdashboardfrontenddeploy.onrender.com'];
-// const allowedOrigins = ['http://localhost:8080']
-// To run locally
+const allowedOrigins = [
+    'https://carbelimdashboardfrontenddeploy.onrender.com',
+    'capacitor://localhost'
+    // 'http://localhost:8080' // Uncomment for local development
+];
 
 const corsOptions = {
     origin: function (origin, callback) {
