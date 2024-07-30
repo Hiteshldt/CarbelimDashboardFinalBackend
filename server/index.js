@@ -10,8 +10,9 @@ const app = express();
 app.use(cookieParser());
 
 const corsOptions = {
-  origin: '*',
-  optionsSuccessStatus: 200,
+    origin: true, // Allow any origin
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 };
 
 app.use(cors(corsOptions));
